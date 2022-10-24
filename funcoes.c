@@ -25,7 +25,7 @@ void menu()
         printf(BOLD("  1. Começar um novo jogo\n"));
         printf(BOLD("  2. Continuar um jogo salvo\n"));
         printf(BOLD("  3. Continuar o jogo atual\n"));
-        printf(BOLD("  4. Exibir o ranking\n")); // tem que atualizar e deixar bonito
+        printf(BOLD("  4. Exibir o ranking\n")); // tem que adicionar o jogador, atualizar as posições e deixar bonito
         printf(BOLD("  Durante o jogo digite \"voltar\" para retornar ao menu\n\n"));
         printf(BOLD("  Escolha a opção: "));
 
@@ -333,24 +333,24 @@ int checaFim(char **tabela)
 // faz a contagem do numero de jogadas em determinada tabela
 int nroJogadas(char **tabela)
 {
-    int cont = 0; //contador de jogadas feitas, vai ser aumentado se houver X ou O na tabela
-    for (int i = 0; i < 3; i++) //for para linha variando de 0 a 3
+    int cont = 0;               // contador de jogadas feitas, vai ser aumentado se houver X ou O na tabela
+    for (int i = 0; i < 3; i++) // for para linha variando de 0 a 3
     {
-        for (int j = 0; j < 3; j++) //for para coluna variando de 0 a 3
+        for (int j = 0; j < 3; j++) // for para coluna variando de 0 a 3
         {
-            switch (tabela[i][j]) //se na tabela na posição linha i coluna j houver X ou O
+            switch (tabela[i][j]) // se na tabela na posição linha i coluna j houver X ou O
             {
             case 'X':
             case 'O':
-                cont++; //o contador aumenta 1
+                cont++; // o contador aumenta 1
                 break;
-            default: //se não, fecha o loop da tabela na posição linha i coluna j
+            default: // se não, fecha o loop da tabela na posição linha i coluna j
                 break;
             }
         }
     }
 
-    return cont; //retorna esse contador, que em outras funções vai ser o número de jogadas
+    return cont; // retorna esse contador, que em outras funções vai ser o número de jogadas
 }
 
 // verifica se o arquivo existe
@@ -368,80 +368,80 @@ int file_exists(const char *filename)
 // salva jogo playerVSpc
 int salvaJogo1(char entrada[], char **tabela, Jogador jog1, int quantJog, int ultimaJog)
 {
-    if (!file_exists(entrada)) //verifica se o arquivo existe. No modo escrita, é necessário que o arquivo não exista se não
-                                //perdemos a informação guardada em um arquivo de mesmo nome
+    if (!file_exists(entrada)) // verifica se o arquivo existe. No modo escrita, é necessário que o arquivo não exista se não
+                               // perdemos a informação guardada em um arquivo de mesmo nome
     {
-        FILE *arquivo1 = fopen(entrada, "w"); //abre o arquivo no modo escrita
+        FILE *arquivo1 = fopen(entrada, "w"); // abre o arquivo no modo escrita
         char c;
 
-        fprintf(arquivo1, "%d\n", quantJog); //grava quant de jogadores
-        fprintf(arquivo1, "%s\n", jog1.nome); //grava nome do jogador 1
+        fprintf(arquivo1, "%d\n", quantJog);  // grava quant de jogadores
+        fprintf(arquivo1, "%s\n", jog1.nome); // grava nome do jogador 1
         for (int linha = 0; linha < 3; linha++)
         {
             for (int coluna = 0; coluna < 3; coluna++)
             {
-                if (tabela[linha][coluna] == ' ') //se na posição existir um espaço em branco, insere um -
+                if (tabela[linha][coluna] == ' ') // se na posição existir um espaço em branco, insere um -
                 {
                     c = '-';
                     fprintf(arquivo1, "%c ", c);
                 }
-                else //se não tiver espaço em branco, grava o que tiver lá
+                else // se não tiver espaço em branco, grava o que tiver lá
                 {
                     fprintf(arquivo1, "%c ", tabela[linha][coluna]);
                 }
             }
             fprintf(arquivo1, "\n");
         }
-        fprintf(arquivo1, "%d\n", ultimaJog); //salva quem fez a ultima jogada
-        printf(BOLD(GREEN("\n  Arquivo \"%s\" salvo com sucesso!\n\n")), entrada); //mensagem de sucesso
+        fprintf(arquivo1, "%d\n", ultimaJog);                                      // salva quem fez a ultima jogada
+        printf(BOLD(GREEN("\n  Arquivo \"%s\" salvo com sucesso!\n\n")), entrada); // mensagem de sucesso
 
-        fclose(arquivo1); //fecha o arquivo
+        fclose(arquivo1); // fecha o arquivo
         return 1;
     }
-    else //se existir um arquivo com o mesmo nome
+    else // se existir um arquivo com o mesmo nome
     {
-        printf(BOLD(RED("  Não foi possível salvar este arquivo!"))); //mensagem de erro
+        printf(BOLD(RED("  Não foi possível salvar este arquivo!"))); // mensagem de erro
         return 0;
     }
 }
 // salva jogo playerVSplayer
 int salvaJogo2(char entrada[], char **tabela, Jogador jog1, Jogador jog2, int quantJog, int ultimaJog)
 {
-    if (!file_exists(entrada)) //verifica se o arquivo não existe, condição necessária 
-                                //para o modo "w" não sobreescrever um arquivo existente
+    if (!file_exists(entrada)) // verifica se o arquivo não existe, condição necessária
+                               // para o modo "w" não sobreescrever um arquivo existente
     {
-        FILE *arquivo1 = fopen(entrada, "w"); 
+        FILE *arquivo1 = fopen(entrada, "w");
         char c;
 
-        fprintf(arquivo1, "%d\n", quantJog); //escreve no arquivo a quant de jogadores
+        fprintf(arquivo1, "%d\n", quantJog);  // escreve no arquivo a quant de jogadores
         fprintf(arquivo1, "%s\n", jog1.nome); // escreve no arquivo o noe do jogador 1
-        fprintf(arquivo1, "%s\n", jog2.nome); //escreve no arquivo o nome do jogador 2
+        fprintf(arquivo1, "%s\n", jog2.nome); // escreve no arquivo o nome do jogador 2
         for (int linha = 0; linha < 3; linha++)
         {
             for (int coluna = 0; coluna < 3; coluna++)
             {
-                if (tabela[linha][coluna] == ' ') //se na tabela na posição linha i e coluna j tiver um espaço em branco
+                if (tabela[linha][coluna] == ' ') // se na tabela na posição linha i e coluna j tiver um espaço em branco
                 {
                     c = '-';
-                    fprintf(arquivo1, " %c ", c); //escreve no arquivo o caractere -
+                    fprintf(arquivo1, " %c ", c); // escreve no arquivo o caractere -
                 }
                 else
                 {
-                    fprintf(arquivo1, " %c ", tabela[linha][coluna]); //se não tiver espaço em branco escreve o que está lá
-                                                                    // no caso X e O
+                    fprintf(arquivo1, " %c ", tabela[linha][coluna]); // se não tiver espaço em branco escreve o que está lá
+                                                                      //  no caso X e O
                 }
             }
             fprintf(arquivo1, "\n");
         }
-        fprintf(arquivo1, "%d\n", ultimaJog); //escreve quem fez a última jogada
-        printf(BOLD(GREEN("\n  Arquivo \"%s\" salvo com sucesso!\n\n")), entrada); //mensagem de sucesso
+        fprintf(arquivo1, "%d\n", ultimaJog);                                      // escreve quem fez a última jogada
+        printf(BOLD(GREEN("\n  Arquivo \"%s\" salvo com sucesso!\n\n")), entrada); // mensagem de sucesso
 
-        fclose(arquivo1); //fecha o arquivo
-        return 1; 
+        fclose(arquivo1); // fecha o arquivo
+        return 1;
     }
-    else //caso o arquivo já exista
+    else // caso o arquivo já exista
     {
-        printf(BOLD(RED("  Não foi possível salvar este arquivo!"))); //mensagem de erro
+        printf(BOLD(RED("  Não foi possível salvar este arquivo!"))); // mensagem de erro
         return 0;
     }
 }
@@ -452,11 +452,12 @@ Jogador *ranking(int *tamanho)
 
     Jogador *lista;
 
-    FILE *arquivo;
-    arquivo = fopen("ranking.txt", "r");
+    if (file_exists(velha.ini))
 
-    if (arquivo != NULL)
     {
+
+        FILE *arquivo;
+        arquivo = fopen("velha.ini", "r");
         fscanf(arquivo, "%d", tamanho);
 
         lista = malloc(*tamanho * sizeof(Jogador));
@@ -464,7 +465,9 @@ Jogador *ranking(int *tamanho)
         for (int i = 0; i < *tamanho; i++)
         {
             Jogador jogador;
-            fgets(jogador.nome, 20, arquivo);
+
+            fgetc(arquivo);
+            fgets(jogador.nome, 50, arquivo);
 
             int tamNome = strlen(jogador.nome);
             jogador.nome[tamNome - 1] = '\0';
@@ -476,25 +479,12 @@ Jogador *ranking(int *tamanho)
 
             lista[i] = jogador;
         }
+        fclose(arquivo);
     }
-    fclose(arquivo);
     return lista;
 }
 
-// insere um jogador no ranking
-void inserirNoRanking(Jogador jogador)
-{
-    FILE *arquivo = fopen("ranking.txt", "w+");
-
-    fprintf(arquivo, "%s\n", jogador.nome);
-    fprintf(arquivo, "%d", jogador.vitorias);
-    fprintf(arquivo, "%d", jogador.empates);
-    fprintf(arquivo, "%d", jogador.derrotas);
-
-    fclose(arquivo);
-}
-
-// imprime o ranking
+// imprime, adiciona e atualiza o ranking
 void mostrarRanking()
 {
 
@@ -531,6 +521,39 @@ void mostrarRanking()
     return;
 }
 
+
+//adiciona e atuzaliza ranking
+void salvarNoRanking(Jogador jogador, char situacao){
+    int tamanho = 0;
+    int novoTamanho = 0;
+
+    Jogador *listaAnt = mostrarRanking(&tamanho);
+    novoTamanho = tamanho + 1;
+    Jogador *lisNov = malloc((novoTamanho) * sizeof(Jogador));
+
+    int ranking = 0;
+    for (int i = 0; i < tamanho; i++)
+    {
+        if (strcmp(jogador.nome, listaAnt[i].nome) != 0){
+            ranking++;
+            if (strcmp(situacao, "venceu") == 0)
+            {
+                listaAnt[i].vitorias++;
+            } else if (strcmp(situacao, "empatou") == 0)
+            {
+                listaAnt[i].empates++;
+            } else if (strcmp(situacao, "perdeu") == 0)
+            {
+                listaAnt[i].derrotas++;
+            }
+            
+        }
+        
+    }
+
+    
+}
+
 // continua um jogo salvo
 void continuarJogo(char nomeArquivo[])
 {
@@ -549,8 +572,8 @@ void continuarJogo(char nomeArquivo[])
         fscanf(arquivo, "%d", &jogo.quantJogadores); // lê a primeira linha do arquivo (que é a quant de jogadores) e armazena
                                                      //  na variável quantJogadores
         c = fgetc(arquivo);
-        fgets(jog1.nome, 50, arquivo); // pega o nome do jogador 1, sem fazer nenhuma verificação pois o jogo sempre vai ter pelo
-                                       // menos um jogador
+        fgets(jog1.nome, 50, arquivo);           // pega o nome do jogador 1, sem fazer nenhuma verificação pois o jogo sempre vai ter pelo
+                                                 // menos um jogador
         jog1.nome[strlen(jog1.nome) - 1] = '\0'; // exclui o /n do final do nome
 
         if (jogo.quantJogadores == 2)
@@ -591,15 +614,15 @@ void continuarJogo(char nomeArquivo[])
         fclose(arquivo);
 
         if (jogo.quantJogadores == 1)
-        { // se a quant de jogadores for 1 vai abrir a função realizar jogada 1,
-          // responsável por fazer jogadas playerVSpc
+        {                                       // se a quant de jogadores for 1 vai abrir a função realizar jogada 1,
+                                                // responsável por fazer jogadas playerVSpc
             realizarJogada1(&tabela, 5, &jog1); // passa como parâmetro a tabela já macada, a flag com valor 5 para não inciar um
                                                 //  novo jogo, e o nome do jogador 1
         }
 
         else
-        { // se a quant de jogadores for 2 vai abrir a função realizar jogada 2,
-          // responsável por fazer jogadas playerVSplayer
+        {                                              // se a quant de jogadores for 2 vai abrir a função realizar jogada 2,
+                                                       // responsável por fazer jogadas playerVSplayer
             realizarJogada2(&tabela, 5, &jog1, &jog2); // passa como parâmetro a tabela já macada, a flag com valor 5 para não inciar um
                                                        //  novo jogo, e o nome dos jogadores 1 e 2
         }
