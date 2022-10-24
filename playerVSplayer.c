@@ -239,44 +239,18 @@ int realizarJogada2(char ***tabela, int flag, Jogador *jog1, Jogador *jog2)
     {
         printf("\n    Parabéns " BOLD(GREEN("%s")) ", você ganhou!", jog1->nome);
 
-        jog1->empates = 0;
-        jog1->derrotas = 0;
-        jog1->vitorias++;
-        inserirNoRanking(*jog1);
-
-        jog2->vitorias = 0;
-        jog2->empates = 0;
-        jog2->derrotas++;
-        inserirNoRanking(*jog2);
         printf("\n");
     }
     else if (checaFim(tabela2) == 2)
     {
         printf("\n    Parabéns " BOLD(GREEN(" %s")) ", você ganhou!", jog2->nome);
 
-        jog2->empates = 0;
-        jog2->derrotas = 0;
-        jog2->vitorias++;
-        inserirNoRanking(*jog2);
-
-        jog1->vitorias = 0;
-        jog1->empates = 0;
-        jog1->derrotas++;
-        inserirNoRanking(*jog1);
         printf("\n");
     }
     else
     {
         printf("\n    Deu velha!\n\n");
-        jog1->vitorias = 0;
-        jog1->derrotas = 0;
-        jog1->empates++;
-        inserirNoRanking(*jog1);
-
-        jog2->vitorias = 0;
-        jog2->derrotas = 0;
-        jog2->empates++;
-        inserirNoRanking(*jog2);
+        
         printf("\n");
     }
     getchar();

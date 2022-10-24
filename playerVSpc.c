@@ -380,15 +380,6 @@ int realizarJogada1(char ***tabela, int flag, Jogador *jogador) //e recebe o nom
     {
         printf("\n   Parabéns" BOLD(GREEN(" %s")) ", você ganhou!", jogador->nome);
 
-        jogador->empates = 0;
-        jogador->derrotas = 0;
-        jogador->vitorias++;
-        inserirNoRanking(*jogador);
-
-        jog2.vitorias = 0;
-        jog2.empates = 0;
-        jog2.derrotas++;
-        inserirNoRanking(jog2);
         printf("\n");
     }
     else if (checaFim(tabela2) == 2) //checa fim retorna 2 se o computador ganhou
@@ -396,29 +387,12 @@ int realizarJogada1(char ***tabela, int flag, Jogador *jogador) //e recebe o nom
 
         printf("\n   " BOLD(GREEN("%s")) " ganhou!", jog2.nome);
 
-        jog2.empates = 0;
-        jog2.derrotas = 0;
-        jog2.vitorias++;
-        inserirNoRanking(jog2);
-
-        jogador->vitorias = 0;
-        jogador->empates = 0;
-        jogador->derrotas++;
-        inserirNoRanking(*jogador);
         printf("\n");
     }
     else //checa fim retorna 0 se deu empate
     {
         printf("\n    Deu velha!\n\n");
-        jogador->vitorias = 0;
-        jogador->derrotas = 0;
-        jogador->empates++;
-        inserirNoRanking(*jogador);
-
-        jog2.vitorias = 0;
-        jog2.derrotas = 0;
-        jog2.empates++;
-        inserirNoRanking(jog2);
+        
         printf("\n");
     }
     getchar();

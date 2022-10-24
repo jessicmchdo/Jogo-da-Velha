@@ -112,7 +112,6 @@ void menu()
             break;
         case 4: // mostra ranking
             mostrarRanking();
-            printf(BOLD(CYAN("  Pressione qualquer tecla para voltar! ")));
             break;
         case 3: // continua jogo atual
             if (info.continua == true)
@@ -452,9 +451,6 @@ Jogador *ranking(int *tamanho)
 
     Jogador *lista;
 
-    if (file_exists(velha.ini))
-
-    {
 
         FILE *arquivo;
         arquivo = fopen("velha.ini", "r");
@@ -480,26 +476,30 @@ Jogador *ranking(int *tamanho)
             lista[i] = jogador;
         }
         fclose(arquivo);
-    }
+    
     return lista;
 }
 
-// imprime, adiciona e atualiza o ranking
+// imprime o ranking
 void mostrarRanking()
 {
 
     Jogador jogador;
     int tamanho;
     char carac;
-    FILE *arquivo2;
-    arquivo2 = fopen("ranking.txt", "r");
+    
+    FILE *arquivo2 = fopen("venha.ini", "r");
+
     printf("\n ....:::: Ranking de Jogadores ::::....\n");
     printf("  \n");
     printf("    " TAB_VER "\tNOME\t\t" TAB_VER "  VITÓRIAS  " TAB_VER "  EMPATES  " TAB_VER "  DERROTAS \n");
-    printf(TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR "\n");
-
+    //printf(TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR TAB_HOR);
+    printf("\n");
+    
     fscanf(arquivo2, "%d", &tamanho);
     fgetc(arquivo2);
+
+
     for (int i = 0; i < tamanho; i++)
     {
         fgets(jogador.nome, 20, arquivo2);
@@ -511,48 +511,19 @@ void mostrarRanking()
         printf("\n");
         // fgetc(arquivo2);
     }
-
-    printf("\n\n");
     fclose(arquivo2);
+    printf("\n\n");
     getchar();
     printf(BOLD(YELLOW("\n  Digite qualquer tecla para continuar: ")));
     scanf("%c", &carac);
+    
     system("clear");
     return;
 }
 
 
-//adiciona e atuzaliza ranking
-void salvarNoRanking(Jogador jogador, char situacao){
-    int tamanho = 0;
-    int novoTamanho = 0;
 
-    Jogador *listaAnt = mostrarRanking(&tamanho);
-    novoTamanho = tamanho + 1;
-    Jogador *lisNov = malloc((novoTamanho) * sizeof(Jogador));
 
-    int ranking = 0;
-    for (int i = 0; i < tamanho; i++)
-    {
-        if (strcmp(jogador.nome, listaAnt[i].nome) != 0){
-            ranking++;
-            if (strcmp(situacao, "venceu") == 0)
-            {
-                listaAnt[i].vitorias++;
-            } else if (strcmp(situacao, "empatou") == 0)
-            {
-                listaAnt[i].empates++;
-            } else if (strcmp(situacao, "perdeu") == 0)
-            {
-                listaAnt[i].derrotas++;
-            }
-            
-        }
-        
-    }
-
-    
-}
 
 // continua um jogo salvo
 void continuarJogo(char nomeArquivo[])
