@@ -52,27 +52,41 @@
 #define BG_CYAN(string) ANSI_BG_COLOR_CYAN string ANSI_RESET
 #define BG_WHITE(string) ANSI_BG_COLOR_WHITE string ANSI_RESET
 
+// caracteres uteis para tabelas
+#define TAB_HOR "\u2501" // ━ (horizontal)
+#define TAB_VER "\u2503" // ┃ (vertical)
+#define TAB_TL "\u250F"  // ┏ (top-left)
+#define TAB_ML "\u2523"  // ┣ (middle-left)
+#define TAB_BL "\u2517"  // ┗ (bottom-left)
+#define TAB_TJ "\u2533"  // ┳ (top-join)
+#define TAB_MJ "\u254B"  // ╋ (middle-join)
+#define TAB_BJ "\u253B"  // ┻ (bottom-join)
+#define TAB_TR "\u2513"  // ┓ (top-right)
+#define TAB_MR "\u252B"  // ┫ (middle-right)
+#define TAB_BR "\u251B"  // ┛ (bottom-right)
 
-void menu(); // ok
-char **criaTabela();
-void liberaTabela(char **tabela);
-void imprimeTabela(char **tabela); // ok
-void limpaTabela(char ***tabela);
-void liberaTabela2(char ***tabela);
-int checaLocal(char **tabela, int linha, int coluna);
-int checaLinha(char **tabela);
-int checaColuna(char **tabela);
-int checaDiagonalPrincipal(char **tabela);
-int checaDiagonalSecundaria(char **tabela);
-int checaFim(char **tabela);
-int nroJogadas(char **tabela);
-void marcarJogada2(char ***tabela, int linha, int coluna, int vez);
-int realizarJogada2(char ***tabela, int flag); // faz jogadas com 2 pessoas
-// void compJoga(char **tabela, int linha, int coluna, int vez);
-void marcarJogada1(char ***tabela, int linha, int coluna, int vez);
-int realizarJogada1(char ***tabela, int flag);
-Jogador ranking(int *tamanho);
-void mostrarRanking();
-int salvaJogo(char entrada[], char **tabela);
+void menu(); // imprime o menu
+char **criaTabela(); //cria uma tabela
+void liberaTabela(char **tabela); //libera tabela
+void imprimeTabela(char **tabela); // imprime tabela
+void liberaTabela2(char ***tabela); // libera tabela
+int checaLocal(char **tabela, int linha, int coluna); //checa se o local que o usuário digitou está vazio
+int checaLinha(char **tabela); //verifica se uma linha está preenchida
+int checaColuna(char **tabela); //verifica se uma coluna está preenchida
+int checaDiagonalPrincipal(char **tabela); //verifica se a diagonal principal está preenchida
+int checaDiagonalSecundaria(char **tabela); //verifica se a diagonal secundária está preenchida
+int checaFim(char **tabela); //verifica se o jogo acabou
+int nroJogadas(char **tabela); //guarda o numero de jogadas feitas
+void marcarJogada2(char ***tabela, int linha, int coluna, int vez); //marca jogadas de playerVSplayer
+int realizarJogada2(char ***tabela, int flag, Jogador *jog1, Jogador *jog2); // faz jogadas com 2 pessoas
+void marcarJogada1(char ***tabela, int linha, int coluna, int vez); //marca jogadas de playerVSpc
+int realizarJogada1(char ***tabela, int flag, Jogador *jogador); //faz jogadas de 1 jogador
+int file_exists(const char *filename); //checa se um arquivo existe ou não
+int salvaJogo1(char entrada[], char **tabela, Jogador jog1, int quantJog, int ultimaJog); //salva o jogo playerVSpc
+int salvaJogo2(char entrada[], char **tabela, Jogador jog1, Jogador jog2, int quantJog, int ultimaJog); //salva jogo playerVSplayer
+void continuarJogo (char nomeArquivo[]); //abrir arquivo salvoo
+Jogador *ranking(int *tamanho); //criar ranking
+void inserirNoRanking(Jogador jogador); //inserir no ranking
+void mostrarRanking(); //mostrar no ranking
 
 #endif
